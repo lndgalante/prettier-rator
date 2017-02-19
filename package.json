@@ -1,13 +1,13 @@
 {
   "name": "prettier-config-generator",
   "version": "1.0.0",
-  "description": "",
+  "description": "CLI to generate a custom config for Prettier formatter",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Leonardo Galante",
+  "license": "MIT",
   "dependencies": {
     "jsonfile": "2.4.0",
     "readline-sync": "1.4.6"
