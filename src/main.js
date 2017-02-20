@@ -11,6 +11,7 @@ module.exports = class PrettierConfigGenerator {
     this.bracketSpacing = true;
     this.jsxBracketSameLine = false;
     this.parser = 'babylon';
+    // Ask for each property
     this.askPrintWidth();
     this.askTabWidth();
     this.askSingleQuote();
@@ -18,33 +19,26 @@ module.exports = class PrettierConfigGenerator {
     this.askBacketSpacing();
     this.askJsxBracketSameLine();
     this.askParser();
+    // Create JSON for those properties
     this.createJson();
   }
   askPrintWidth() {
     console.log('Fit code within this line limit.');
-    this.printWidth = readlineSync.questionInt(
-      `Insert Print Width (default: ${this.printWidth}): `,
-      {
-        defaultInput: this.printWidth
-      }
-    );
+    this.printWidth = readlineSync.questionInt(`Insert Print Width (default: ${this.printWidth}): `, {
+      defaultInput: this.printWidth
+    });
     console.log('\n');
   }
   askTabWidth() {
     console.log('Number of spaces it should use per tab.');
-    this.tabWidth = readlineSync.questionInt(
-      `Insert Tab Width (default: ${this.tabWidth}): `,
-      {
-        defaultInput: this.tabWidth
-      }
-    );
+    this.tabWidth = readlineSync.questionInt(`Insert Tab Width (default: ${this.tabWidth}): `, {
+      defaultInput: this.tabWidth
+    });
     console.log('\n');
   }
   askSingleQuote() {
     console.log('If true, will use single instead of double quotes.');
-    this.singleQuote = readlineSync.keyInYNStrict(
-      `Want Single Quotes? (default: ${this.singleQuote}): `
-    );
+    this.singleQuote = readlineSync.keyInYNStrict(`Want Single Quotes? (default: ${this.singleQuote}): `);
     console.log('\n');
   }
   askTrailingComma() {
@@ -54,13 +48,9 @@ module.exports = class PrettierConfigGenerator {
       'es5 - Trailing commas where valid in ES5 (objects, arrays, etc)',
       'all - Trailing commas wherever possible (function arguments)'
     ];
-    const index = readlineSync.keyInSelect(
-      options,
-      `Which option you want? (default: ${this.trailingComma})`,
-      {
-        cancel: false
-      }
-    );
+    const index = readlineSync.keyInSelect(options, `Which option you want? (default: ${this.trailingComma})`, {
+      cancel: false
+    });
     switch (index) {
       case 0:
         this.trailingComma = 'none';
@@ -78,9 +68,7 @@ module.exports = class PrettierConfigGenerator {
   }
   askBacketSpacing() {
     console.log('Controls the printing of spaces inside object literals.');
-    this.bracketSpacing = readlineSync.keyInYNStrict(
-      `Want bracket spacing? (default: ${this.bracketSpacing}): `
-    );
+    this.bracketSpacing = readlineSync.keyInYNStrict(`Want bracket spacing? (default: ${this.bracketSpacing}): `);
     console.log('\n');
   }
   askJsxBracketSameLine() {
@@ -97,13 +85,9 @@ module.exports = class PrettierConfigGenerator {
   askParser() {
     console.log('Which parser to use.');
     const options = ['babylon', 'flow'];
-    const index = readlineSync.keyInSelect(
-      options,
-      `Which option you want? (default: ${this.parser})`,
-      {
-        cancel: false
-      }
-    );
+    const index = readlineSync.keyInSelect(options, `Which option you want? (default: ${this.parser})`, {
+      cancel: false
+    });
     this.parser = options[index];
     console.log('\n');
   }

@@ -3,7 +3,7 @@ CLI to generate a custom config for Prettier formatter
 
 ## How-to
 ```bash
-npm i && npm start
+npm install && npm start
 ```
 
 ## NPM Dependencies

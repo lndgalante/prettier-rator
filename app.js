@@ -1,2 +1,2 @@
-const PrettierConfigGenerator = require('./bin/main');
-const prettierConfigGenerator = new PrettierConfigGenerator();
+const PrettierConfigGenerator = require('./src/main');
+new PrettierConfigGenerator();
