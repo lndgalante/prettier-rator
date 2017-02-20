@@ -1,11 +1,15 @@
 # prettier-config-generator
 CLI to generate a custom config for Prettier formatter
 
-## How-to
+### How-to
 ```bash
 npm install && npm start
 ```
 
-## NPM Dependencies
+### NPM Dependencies
 * jsonfile
 * readline-sync
+
+
+### License
+MIT
