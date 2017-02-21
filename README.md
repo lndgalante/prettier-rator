@@ -1,4 +1,4 @@
-# [![prettierRATOR](http://i.imgur.com/lQXioD6.png)]()
+# [![prettierRATOR](media/logo.png)](https://github.com/Fenwil/prettierRATOR)
 
 > CLI to generate a Prettier file config for each text editor plugin
 
@@ -20,8 +20,9 @@ npm install && npm start
 ```
 
 ### NPM Dependencies
-* jsonfile
 * readline-sync
+* jsonfile
+* chalk
 
 ### License
 MIT

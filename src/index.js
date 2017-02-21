@@ -1,7 +1,9 @@
 const readlineSync = require('readline-sync');
 const jsonfile = require('jsonfile');
+const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs');
+const log = console.log;
 jsonfile.spaces = 2;
 
 module.exports = class PrettierConfigGenerator {
@@ -26,26 +28,26 @@ module.exports = class PrettierConfigGenerator {
     // Ask for each property in Prettier
     this.askAll();
     // Create config for each text editor
-    this.createConfig();
+    this.createAllConfigs();
   }
   askPrintWidth() {
-    console.log('Fit code within this line limit.');
+    log(chalk.dim('Fit code within this line limit.'));
     this.config.printWidth = readlineSync.questionInt(`Insert Print Width (default: ${this.config.printWidth}): `, {
       defaultInput: this.config.printWidth
     });
   }
   askTabWidth() {
-    console.log('Number of spaces it should use per tab.');
+    log(chalk.dim('Number of spaces it should use per tab.'));
     this.config.tabWidth = readlineSync.questionInt(`Insert Tab Width (default: ${this.config.tabWidth}): `, {
       defaultInput: this.config.tabWidth
     });
   }
   askSingleQuote() {
-    console.log('If true, will use single instead of double quotes.');
+    log(chalk.dim('If true, will use single instead of double quotes.'));
     this.config.singleQuote = readlineSync.keyInYNStrict(`Want Single Quotes? (default: ${this.config.singleQuote}): `);
   }
   askTrailingComma() {
-    console.log('Controls the printing of trailing commas wherever possible.');
+    log(chalk.dim('Controls the printing of trailing commas wherever possible.'));
     const options = [
       'none - No trailing commas',
       'es5 - Trailing commas where valid in ES5 (objects, arrays, etc)',
@@ -69,23 +71,25 @@ module.exports = class PrettierConfigGenerator {
     }
   }
   askBacketSpacing() {
-    console.log('Controls the printing of spaces inside object literals.');
+    log(chalk.dim('Controls the printing of spaces inside object literals.'));
     this.config.bracketSpacing = readlineSync.keyInYNStrict(
       `Want bracket spacing? (default: ${this.config.bracketSpacing}): `
     );
   }
   askJsxBracketSameLine() {
-    console.log(
-      `If true, puts the '>' of a multi-line jsx element at the end of
-    the last line instead of being alone on the next line.
+    log(
+      chalk.dim(
+        `If true, puts the '>' of a multi-line jsx element at the end of 
+the last line instead of being alone on the next line.
     `
+      )
     );
     this.config.jsxBracketSameLine = readlineSync.keyInYNStrict(
       `Want '>' on the same line? (default: ${this.config.jsxBracketSameLine}): `
     );
   }
   askParser() {
-    console.log('Which parser to use.');
+    log(chalk.dim('Which parser to use.'));
     const options = ['babylon', 'flow'];
     const index = readlineSync.keyInSelect(options, `Which option you want? (default: ${this.config.parser})`, {
       cancel: false
@@ -94,19 +98,19 @@ module.exports = class PrettierConfigGenerator {
   }
   askAll() {
     this.askPrintWidth();
-    console.log('\n');
+    log('\n');
     this.askTabWidth();
-    console.log('\n');
+    log('\n');
     this.askSingleQuote();
-    console.log('\n');
+    log('\n');
     this.askTrailingComma();
-    console.log('\n');
+    log('\n');
     this.askBacketSpacing();
-    console.log('\n');
+    log('\n');
     this.askJsxBracketSameLine();
-    console.log('\n');
+    log('\n');
     this.askParser();
-    console.log('\n');
+    log('\n');
   }
   createSublimeTextConfig() {
     const sublimeTextConfig = {
@@ -115,11 +119,13 @@ module.exports = class PrettierConfigGenerator {
       allow_inline_formatting: false,
       prettier_options: this.config
     };
-    jsonfile.writeFileSync(this.sublimeTextConfigPath, sublimeTextConfig, err => {
-      if (err) console.error(err);
-      console.log('Sublime Text config generated!');
-      console.log(`Find it in: ${this.currentPath + this.sublimeTextConfigPath.replace('.', '')} \n`);
-    });
+    try {
+      jsonfile.writeFileSync(this.sublimeTextConfigPath, sublimeTextConfig);
+      log(chalk.underline.green('Sublime Text config generated!'));
+      log(`Find it in: ${this.currentPath + this.sublimeTextConfigPath.replace('.', '')} \n`);
+    } catch (err) {
+      log(chalk.red(err));
+    }
   }
   createVisualStudioCodeConfig() {
     const visualStudioCodeConfig = {
@@ -130,13 +136,15 @@ module.exports = class PrettierConfigGenerator {
       'prettier.bracketSpacing': this.config.bracketSpacing,
       'prettier.parser': this.config.parser
     };
-    jsonfile.writeFileSync(this.visualStudioCodeConfigPath, visualStudioCodeConfig, err => {
-      if (err) console.error(err);
-      console.log('Visual Studio Code config generated!');
-      console.log(`Find it in: ${this.currentPath + this.visualStudioCodeConfigPath.replace('.', '')} \n`);
-    });
+    try {
+      jsonfile.writeFileSync(this.visualStudioCodeConfigPath, visualStudioCodeConfig);
+      log(chalk.underline.green('Visual Studio Code config generated!'));
+      log(`Find it in: ${this.currentPath + this.visualStudioCodeConfigPath.replace('.', '')} \n`);
+    } catch (err) {
+      log(chalk.red(err));
+    }
   }
-  createConfig() {
+  createAllConfigs() {
     if (!fs.existsSync(this.configFolderPath)) {
       fs.mkdirSync(this.configFolderPath);
     }
