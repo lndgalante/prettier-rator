@@ -1,5 +1,6 @@
 const readlineSync = require('readline-sync');
 const jsonfile = require('jsonfile');
+const path = require('path');
 const fs = require('fs');
 jsonfile.spaces = 2;
 
@@ -15,10 +16,13 @@ module.exports = class PrettierConfigGenerator {
       jsxBracketSameLine: false,
       parser: 'babylon'
     };
+    // Current path name for letting know the user where to find the files
+    this.currentPath = path.resolve('./');
     // Folder name where config files will be saved
     this.configFolderPath = './configs';
     // File paths for each text editor new config file
     this.sublimeConfigPath = `${this.configFolderPath}/JsPrettier.sublime-settings`;
+    this.vsCodeConfigPath = `${this.configFolderPath}/settings.json`;
     // Ask for each property in Prettier
     this.askAll();
     // Create config for each text editor
@@ -111,15 +115,32 @@ module.exports = class PrettierConfigGenerator {
       allow_inline_formatting: false,
       prettier_options: this.config
     };
-    jsonfile.writeFile(this.sublimeConfigPath, sublimeConfig, err => {
+    jsonfile.writeFileSync(this.sublimeConfigPath, sublimeConfig, err => {
       if (err) console.error(err);
-      console.log('Sublime Text config generated !');
+      console.log('Sublime Text config generated!');
+      console.log(`Find it in: ${this.currentPath + this.sublimeConfigPath.replace('.', '')} \n`);
+    });
+  }
+  createVsCodeConfig() {
+    const vsCodeConfig = {
+      'prettier.printWidth': this.config.printWidth,
+      'prettier.tabWidth': this.config.tabWidth,
+      'prettier.singleQuote': this.config.singleQuote,
+      'prettier.trailingComma': this.config.trailingComma,
+      'prettier.bracketSpacing': this.config.bracketSpacing,
+      'prettier.parser': this.config.parser
+    };
+    jsonfile.writeFile(this.vsCodeConfigPath, vsCodeConfig, err => {
+      if (err) console.error(err);
+      console.log('Visual Studio Code config generated!');
+      console.log(`Find it in: ${this.currentPath + this.vsCodeConfigPath.replace('.', '')} \n`);
     });
   }
   createConfig() {
-    if (!fs.existsSync('./configs')) {
-      fs.mkdirSync('./configs');
+    if (!fs.existsSync(this.configFolderPath)) {
+      fs.mkdirSync(this.configFolderPath);
     }
     this.createSublimeConfig();
+    this.createVsCodeConfig();
   }
 };

@@ -1,18 +1,19 @@
-# prettier-config-generator
+# prettierator
 CLI to generate a Prettier file config for each text editor plugin
 
 ### Why?
-Because there's no prettier setting file (like .eslintrc) to share along your team or your text editors
+Because there's no prettier config file (like .eslintrc) to share along your team or your text editors
 
 ### How?
-Just insert your custom config and it will generate a file for each plugin like:
+Just insert your custom parameters and it will generate a file for each plugin like:
 * [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 * [Sublime Text](https://packagecontrol.io/packages/JsPrettier)
+* More to come!
 
-### How?
-Just insert your custom config and it will generate a file for each plugin like:
-* [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-* [Sublime Text](https://packagecontrol.io/packages/JsPrettier)
+### What?
+I saw an early and big adoption for Prettier and want it to make it more accesible to every team and text editor.
+
+No more styles decisions or discussions!
 
 ### Usage
 ```bash
