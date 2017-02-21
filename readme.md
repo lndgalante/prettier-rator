@@ -15,6 +15,7 @@ Just insert your custom parameters and it will generate a file for each plugin l
 I saw an early and big adoption and wanted to make it more accessible and easy to use
 
 ### Usage
+Clone or download the repo and run the following command on your terminal
 ```bash
 npm install && npm start
 ```
