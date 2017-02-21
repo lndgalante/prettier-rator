@@ -31,23 +31,23 @@ module.exports = class PrettierConfigGenerator {
     this.createAllConfigs();
   }
   askPrintWidth() {
-    log(chalk.dim('Fit code within this line limit.'));
+    log(chalk.dim('Fit code within this line limit. \n'));
     this.config.printWidth = readlineSync.questionInt(`Insert Print Width (default: ${this.config.printWidth}): `, {
       defaultInput: this.config.printWidth
     });
   }
   askTabWidth() {
-    log(chalk.dim('Number of spaces it should use per tab.'));
+    log(chalk.dim('Number of spaces it should use per tab. \n'));
     this.config.tabWidth = readlineSync.questionInt(`Insert Tab Width (default: ${this.config.tabWidth}): `, {
       defaultInput: this.config.tabWidth
     });
   }
   askSingleQuote() {
-    log(chalk.dim('If true, will use single instead of double quotes.'));
+    log(chalk.dim('If true, will use single instead of double quotes. \n'));
     this.config.singleQuote = readlineSync.keyInYNStrict(`Want Single Quotes? (default: ${this.config.singleQuote}): `);
   }
   askTrailingComma() {
-    log(chalk.dim('Controls the printing of trailing commas wherever possible.'));
+    log(chalk.dim('Controls the printing of trailing commas wherever possible. \n'));
     const options = [
       'none - No trailing commas',
       'es5 - Trailing commas where valid in ES5 (objects, arrays, etc)',
@@ -98,19 +98,19 @@ the last line instead of being alone on the next line.
   }
   askAll() {
     this.askPrintWidth();
-    log('\n');
+    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
     this.askTabWidth();
-    log('\n');
+    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
     this.askSingleQuote();
-    log('\n');
+    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
     this.askTrailingComma();
-    log('\n');
+    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
     this.askBacketSpacing();
-    log('\n');
+    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
     this.askJsxBracketSameLine();
-    log('\n');
+    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
     this.askParser();
-    log('\n');
+    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
   }
   createSublimeTextConfig() {
     const sublimeTextConfig = {
