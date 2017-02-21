@@ -3,5 +3,5 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-# config file generated
-prettierconfig.json
+# config files generated
+/configs/*

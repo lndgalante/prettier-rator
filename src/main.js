@@ -1,45 +1,44 @@
 const readlineSync = require('readline-sync');
 const jsonfile = require('jsonfile');
+const fs = require('fs');
+jsonfile.spaces = 2;
 
 module.exports = class PrettierConfigGenerator {
   constructor() {
-    // Default values do no touch!
-    this.printWidth = 80;
-    this.tabWidth = 2;
-    this.singleQuote = false;
-    this.trailingComma = 'none';
-    this.bracketSpacing = true;
-    this.jsxBracketSameLine = false;
-    this.parser = 'babylon';
-    // Ask for each property
-    this.askPrintWidth();
-    this.askTabWidth();
-    this.askSingleQuote();
-    this.askTrailingComma();
-    this.askBacketSpacing();
-    this.askJsxBracketSameLine();
-    this.askParser();
-    // Create JSON for those properties
-    this.createJson();
+    // Default values do no touch ! (unless they change on the documentation)
+    this.config = {
+      printWidth: 80,
+      tabWidth: 2,
+      singleQuote: false,
+      trailingComma: 'none',
+      bracketSpacing: true,
+      jsxBracketSameLine: false,
+      parser: 'babylon'
+    };
+    // Folder name where config files will be saved
+    this.configFolderPath = './configs';
+    // File paths for each text editor new config file
+    this.sublimeConfigPath = `${this.configFolderPath}/JsPrettier.sublime-settings`;
+    // Ask for each property in Prettier
+    this.askAll();
+    // Create config for each text editor
+    this.createConfig();
   }
   askPrintWidth() {
     console.log('Fit code within this line limit.');
-    this.printWidth = readlineSync.questionInt(`Insert Print Width (default: ${this.printWidth}): `, {
-      defaultInput: this.printWidth
+    this.config.printWidth = readlineSync.questionInt(`Insert Print Width (default: ${this.config.printWidth}): `, {
+      defaultInput: this.config.printWidth
     });
-    console.log('\n');
   }
   askTabWidth() {
     console.log('Number of spaces it should use per tab.');
-    this.tabWidth = readlineSync.questionInt(`Insert Tab Width (default: ${this.tabWidth}): `, {
-      defaultInput: this.tabWidth
+    this.config.tabWidth = readlineSync.questionInt(`Insert Tab Width (default: ${this.config.tabWidth}): `, {
+      defaultInput: this.config.tabWidth
     });
-    console.log('\n');
   }
   askSingleQuote() {
     console.log('If true, will use single instead of double quotes.');
-    this.singleQuote = readlineSync.keyInYNStrict(`Want Single Quotes? (default: ${this.singleQuote}): `);
-    console.log('\n');
+    this.config.singleQuote = readlineSync.keyInYNStrict(`Want Single Quotes? (default: ${this.config.singleQuote}): `);
   }
   askTrailingComma() {
     console.log('Controls the printing of trailing commas wherever possible.');
@@ -48,28 +47,28 @@ module.exports = class PrettierConfigGenerator {
       'es5 - Trailing commas where valid in ES5 (objects, arrays, etc)',
       'all - Trailing commas wherever possible (function arguments)'
     ];
-    const index = readlineSync.keyInSelect(options, `Which option you want? (default: ${this.trailingComma})`, {
+    const index = readlineSync.keyInSelect(options, `Which option you want? (default: ${this.config.trailingComma})`, {
       cancel: false
     });
     switch (index) {
       case 0:
-        this.trailingComma = 'none';
+        this.config.trailingComma = 'none';
         break;
       case 1:
-        this.trailingComma = 'es5';
+        this.config.trailingComma = 'es5';
         break;
       case 2:
-        this.trailingComma = 'all';
+        this.config.trailingComma = 'all';
         break;
       default:
         break;
     }
-    console.log('\n');
   }
   askBacketSpacing() {
     console.log('Controls the printing of spaces inside object literals.');
-    this.bracketSpacing = readlineSync.keyInYNStrict(`Want bracket spacing? (default: ${this.bracketSpacing}): `);
-    console.log('\n');
+    this.config.bracketSpacing = readlineSync.keyInYNStrict(
+      `Want bracket spacing? (default: ${this.config.bracketSpacing}): `
+    );
   }
   askJsxBracketSameLine() {
     console.log(
@@ -77,33 +76,50 @@ module.exports = class PrettierConfigGenerator {
     the last line instead of being alone on the next line.
     `
     );
-    this.jsxBracketSameLine = readlineSync.keyInYNStrict(
-      `Want '>' on the same line? (default: ${this.jsxBracketSameLine}): `
+    this.config.jsxBracketSameLine = readlineSync.keyInYNStrict(
+      `Want '>' on the same line? (default: ${this.config.jsxBracketSameLine}): `
     );
-    console.log('\n');
   }
   askParser() {
     console.log('Which parser to use.');
     const options = ['babylon', 'flow'];
-    const index = readlineSync.keyInSelect(options, `Which option you want? (default: ${this.parser})`, {
+    const index = readlineSync.keyInSelect(options, `Which option you want? (default: ${this.config.parser})`, {
       cancel: false
     });
-    this.parser = options[index];
+    this.config.parser = options[index];
+  }
+  askAll() {
+    this.askPrintWidth();
+    console.log('\n');
+    this.askTabWidth();
+    console.log('\n');
+    this.askSingleQuote();
+    console.log('\n');
+    this.askTrailingComma();
+    console.log('\n');
+    this.askBacketSpacing();
+    console.log('\n');
+    this.askJsxBracketSameLine();
+    console.log('\n');
+    this.askParser();
     console.log('\n');
   }
-  createJson() {
-    const file = './prettierconfig.json';
-    const configuration = {
-      printWidth: this.printWidth,
-      tabWidth: this.tabWidth,
-      singleQuote: this.singleQuote,
-      trailingComma: this.trailingComma,
-      bracketSpacing: this.bracketSpacing,
-      jsxBracketSameline: this.jsxBracketSameLine,
-      parser: this.parser
+  createSublimeConfig() {
+    const sublimeConfig = {
+      prettier_cli_path: '',
+      auto_format_on_save: false,
+      allow_inline_formatting: false,
+      prettier_options: this.config
     };
-    jsonfile.writeFile(file, configuration, { spaces: 2 }, err => {
+    jsonfile.writeFile(this.sublimeConfigPath, sublimeConfig, err => {
       if (err) console.error(err);
+      console.log('Sublime Text config generated !');
     });
+  }
+  createConfig() {
+    if (!fs.existsSync('./configs')) {
+      fs.mkdirSync('./configs');
+    }
+    this.createSublimeConfig();
   }
 };

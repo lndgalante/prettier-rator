@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "jsonfile": "2.4.0",
+    "react-navigation": "^1.0.0-beta.5",
     "readline-sync": "1.4.6"
   }
 }
