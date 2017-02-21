@@ -23,6 +23,5 @@ npm install && npm start
 * jsonfile
 * readline-sync
 
-
 ### License
 MIT

@@ -21,8 +21,8 @@ module.exports = class PrettierConfigGenerator {
     // Folder name where config files will be saved
     this.configFolderPath = './configs';
     // File paths for each text editor new config file
-    this.sublimeConfigPath = `${this.configFolderPath}/JsPrettier.sublime-settings`;
-    this.vsCodeConfigPath = `${this.configFolderPath}/settings.json`;
+    this.sublimeTextConfigPath = `${this.configFolderPath}/JsPrettier.sublime-settings`;
+    this.visualStudioCodeConfigPath = `${this.configFolderPath}/settings.json`;
     // Ask for each property in Prettier
     this.askAll();
     // Create config for each text editor
@@ -108,21 +108,21 @@ module.exports = class PrettierConfigGenerator {
     this.askParser();
     console.log('\n');
   }
-  createSublimeConfig() {
-    const sublimeConfig = {
+  createSublimeTextConfig() {
+    const sublimeTextConfig = {
       prettier_cli_path: '',
       auto_format_on_save: false,
       allow_inline_formatting: false,
       prettier_options: this.config
     };
-    jsonfile.writeFileSync(this.sublimeConfigPath, sublimeConfig, err => {
+    jsonfile.writeFileSync(this.sublimeTextConfigPath, sublimeTextConfig, err => {
       if (err) console.error(err);
       console.log('Sublime Text config generated!');
-      console.log(`Find it in: ${this.currentPath + this.sublimeConfigPath.replace('.', '')} \n`);
+      console.log(`Find it in: ${this.currentPath + this.sublimeTextConfigPath.replace('.', '')} \n`);
     });
   }
-  createVsCodeConfig() {
-    const vsCodeConfig = {
+  createVisualStudioCodeConfig() {
+    const visualStudioCodeConfig = {
       'prettier.printWidth': this.config.printWidth,
       'prettier.tabWidth': this.config.tabWidth,
       'prettier.singleQuote': this.config.singleQuote,
@@ -130,17 +130,17 @@ module.exports = class PrettierConfigGenerator {
       'prettier.bracketSpacing': this.config.bracketSpacing,
       'prettier.parser': this.config.parser
     };
-    jsonfile.writeFile(this.vsCodeConfigPath, vsCodeConfig, err => {
+    jsonfile.writeFileSync(this.visualStudioCodeConfigPath, visualStudioCodeConfig, err => {
       if (err) console.error(err);
       console.log('Visual Studio Code config generated!');
-      console.log(`Find it in: ${this.currentPath + this.vsCodeConfigPath.replace('.', '')} \n`);
+      console.log(`Find it in: ${this.currentPath + this.visualStudioCodeConfigPath.replace('.', '')} \n`);
     });
   }
   createConfig() {
     if (!fs.existsSync(this.configFolderPath)) {
       fs.mkdirSync(this.configFolderPath);
     }
-    this.createSublimeConfig();
-    this.createVsCodeConfig();
+    this.createSublimeTextConfig();
+    this.createVisualStudioCodeConfig();
   }
 };
