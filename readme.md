@@ -17,7 +17,7 @@ I saw an early and big adoption and wanted to make it more accessible and easy t
 ### Usage
 Clone or download the repo and run the following command on your terminal
 ```bash
-npm install && npm start
+$ npm install && npm start
 ```
 
 ### NPM Dependencies
