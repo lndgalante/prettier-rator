@@ -27,8 +27,8 @@ Go to your project folder and run
   $ prettier-rator
 ```
 
-Your config will be generated under the `configs` folder
-  * General Configuration: `prettierconfig.json`
+Your configuration files will be generated under the `configs` folder
+  * General Configuration (API): `prettierconfig.json`
   * Sublime Text: `JsPrettier.sublime-settings`
   * Visual Studio Code: `settings.json`
 
