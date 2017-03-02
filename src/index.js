@@ -25,6 +25,7 @@ module.exports = class PrettierConfigGenerator {
     // File paths for each text editor new config file
     this.sublimeTextConfigPath = `${this.configFolderPath}/JsPrettier.sublime-settings`;
     this.visualStudioCodeConfigPath = `${this.configFolderPath}/settings.json`;
+    this.generalConfigPath = `${this.configFolderPath}/prettierconfig.json`;
     // Ask for each property in Prettier
     this.askAll();
     // Create config for each text editor
@@ -47,7 +48,8 @@ module.exports = class PrettierConfigGenerator {
     this.config.singleQuote = readlineSync.keyInYNStrict(`Want Single Quotes? (default: ${this.config.singleQuote}): `);
   }
   askTrailingComma() {
-    log(chalk.dim('Controls the printing of trailing commas wherever possible. \n'));
+    log(chalk.dim('Controls the printing of trailing commas wherever possible.'));
+    log(chalk.dim('Options below is only available in 0.19.0 and above. Previously this was a boolean argument.'));
     const options = [
       'none - No trailing commas',
       'es5 - Trailing commas where valid in ES5 (objects, arrays, etc)',
@@ -71,7 +73,7 @@ module.exports = class PrettierConfigGenerator {
     }
   }
   askBacketSpacing() {
-    log(chalk.dim('Controls the printing of spaces inside object literals.'));
+    log(chalk.dim('Controls the printing of spaces inside object literals. \n'));
     this.config.bracketSpacing = readlineSync.keyInYNStrict(
       `Want bracket spacing? (default: ${this.config.bracketSpacing}): `
     );
@@ -98,19 +100,36 @@ the last line instead of being alone on the next line.
   }
   askAll() {
     this.askPrintWidth();
-    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
+    log(chalk.bold.yellow('\n------------------------------------------------------------------------ \n'));
     this.askTabWidth();
-    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
+    log(chalk.bold.yellow('\n------------------------------------------------------------------------ \n'));
     this.askSingleQuote();
-    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
+    log(chalk.bold.yellow('\n------------------------------------------------------------------------ \n'));
     this.askTrailingComma();
-    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
+    log(chalk.bold.yellow('\n------------------------------------------------------------------------ \n'));
     this.askBacketSpacing();
-    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
+    log(chalk.bold.yellow('\n------------------------------------------------------------------------ \n'));
     this.askJsxBracketSameLine();
-    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
+    log(chalk.bold.yellow('\n------------------------------------------------------------------------ \n'));
     this.askParser();
-    log(chalk.bold.yellow('\n ------------------------------------------------------------------------ \n'));
+    log(chalk.bold.yellow('\n------------------------------------------------------------------------ \n'));
+  }
+  createGeneralConfig() {
+    const generalConfig = {
+      printWidth: this.config.printWidth,
+      tabWidth: this.config.tabWidth,
+      singleQuote: this.config.singleQuote,
+      trailingComma: this.config.trailingComma,
+      bracketSpacing: this.config.bracketSpacing,
+      parser: this.config.parser
+    };
+    try {
+      jsonfile.writeFileSync(this.generalConfigPath, generalConfig);
+      log(chalk.underline.green('Prettier General config generated!'));
+      log(`Find it in: ${this.currentPath + this.generalConfigPath.replace('.', '')} \n`);
+    } catch (err) {
+      log(chalk.red(err));
+    }
   }
   createSublimeTextConfig() {
     const sublimeTextConfig = {
@@ -148,6 +167,7 @@ the last line instead of being alone on the next line.
     if (!fs.existsSync(this.configFolderPath)) {
       fs.mkdirSync(this.configFolderPath);
     }
+    this.createGeneralConfig();
     this.createSublimeTextConfig();
     this.createVisualStudioCodeConfig();
   }
