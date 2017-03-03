@@ -1,5 +1,5 @@
 {
-  "name": "prettier-config-generator",
+  "name": "prettier-rator",
   "version": "1.0.0",
   "description": "CLI to generate a custom config for Prettier formatter",
   "main": "app.js",

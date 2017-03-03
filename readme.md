@@ -1,9 +1,9 @@
-# [![prettierRATOR](media/logo.png)](https://github.com/Fenwil/prettierRATOR)
+# [![prettier-rator](media/logo.png)](https://github.com/Fenwil/prettier-rator)
 
 > CLI to generate a Prettier file config for each text editor plugin
 
 ## Why?
-There's no prettier config file (like .eslintrc) to share along your team or your text editors
+There's no prettier configuration file (like .eslintrc) to share along your projects, text editors, and/or your team
 
 ## How?
 Just insert your custom parameters and it will generate a file for each text editor (plugin) and a general config file:
@@ -13,7 +13,7 @@ Just insert your custom parameters and it will generate a file for each text edi
 * And more to come...
 
 ## What?
-I saw an early and big adoption and wanted to make it more accessible and easy to use
+I saw an early and big adoption and wanted to make it more easy to use 
 
 ## Install
 ```bash
