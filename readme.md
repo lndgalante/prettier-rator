@@ -1,4 +1,4 @@
-# [![prettier-rator](media/logo.png)](https://github.com/Fenwil/prettier-rator)
+# [![prettier-rator](https://cdn.rawgit.com/Fenwil/prettier-rator/92096c2a/media/logo.png)](https://github.com/Fenwil/prettier-rator)
 
 > CLI to generate a Prettier file config for each text editor plugin
 
