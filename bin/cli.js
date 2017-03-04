@@ -1,10 +1,10 @@
 #! /usr/bin/env node
 
 const program = require('commander');
-const PrettierRator = require('./src');
+const PrettierRator = require('../src');
 
 program
-  .version('0.0.4')
+  .version('0.0.5')
   .option('-c, --create [editor]', 'Create configuration files for all editors or the ones you want');
 
 program.on('--help', function() {

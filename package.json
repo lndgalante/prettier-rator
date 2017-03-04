@@ -2,7 +2,7 @@
   "name": "prettier-rator",
   "version": "0.0.4",
   "description": "CLI to generate a custom config for Prettier formatter",
-  "main": "cli.js",
+  "main": "bin/cli.js",
   "bin": {
     "prettier-rator": "./bin/cli.js"
   },
