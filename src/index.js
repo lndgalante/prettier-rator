@@ -6,8 +6,8 @@ const fs = require('fs');
 const log = console.log;
 jsonfile.spaces = 2;
 
-module.exports = class PrettierConfigGenerator {
-  constructor() {
+module.exports = class PrettierRator {
+  constructor(editorName) {
     // Default values do no touch ! (unless they change on the documentation)
     this.config = {
       printWidth: 80,
@@ -26,10 +26,27 @@ module.exports = class PrettierConfigGenerator {
     this.sublimeTextConfigPath = `${this.configFolderPath}/JsPrettier.sublime-settings`;
     this.visualStudioCodeConfigPath = `${this.configFolderPath}/settings.json`;
     this.generalConfigPath = `${this.configFolderPath}/prettierconfig.json`;
-    // Ask for each property in Prettier
-    this.askAll();
     // Create config for each text editor
-    this.createAllConfigs();
+    switch (editorName) {
+      case true:
+        this.askAll();
+        this.createAllConfigs();
+        return;
+      case 'api':
+        this.askAll();
+        this.createGeneralConfig();
+        return;
+      case 'st':
+        this.askAll();
+        this.createSublimeTextConfig();
+        return;
+      case 'vsc':
+        this.askAll();
+        this.createVisualStudioCodeConfig();
+        return;
+      default:
+        return;
+    }
   }
   askPrintWidth() {
     log(chalk.dim('Fit code within this line limit. \n'));
@@ -114,7 +131,13 @@ the last line instead of being alone on the next line.
     this.askParser();
     log(chalk.bold.yellow('\n------------------------------------------------------------------------ \n'));
   }
+  createFolder() {
+    if (!fs.existsSync(this.configFolderPath)) {
+      fs.mkdirSync(this.configFolderPath);
+    }
+  }
   createGeneralConfig() {
+    this.createFolder();
     const generalConfig = {
       printWidth: this.config.printWidth,
       tabWidth: this.config.tabWidth,
@@ -132,6 +155,7 @@ the last line instead of being alone on the next line.
     }
   }
   createSublimeTextConfig() {
+    this.createFolder();
     const sublimeTextConfig = {
       prettier_cli_path: '',
       auto_format_on_save: false,
@@ -147,6 +171,7 @@ the last line instead of being alone on the next line.
     }
   }
   createVisualStudioCodeConfig() {
+    this.createFolder();
     const visualStudioCodeConfig = {
       'prettier.printWidth': this.config.printWidth,
       'prettier.tabWidth': this.config.tabWidth,
@@ -164,9 +189,7 @@ the last line instead of being alone on the next line.
     }
   }
   createAllConfigs() {
-    if (!fs.existsSync(this.configFolderPath)) {
-      fs.mkdirSync(this.configFolderPath);
-    }
+    this.createFolder();
     this.createGeneralConfig();
     this.createSublimeTextConfig();
     this.createVisualStudioCodeConfig();
