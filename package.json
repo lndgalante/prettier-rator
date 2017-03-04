@@ -1,6 +1,6 @@
 {
   "name": "prettier-rator",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "CLI to generate a custom config for Prettier formatter",
   "main": "bin/cli.js",
   "bin": {
