@@ -2,9 +2,12 @@
   "name": "prettier-rator",
   "version": "0.0.3",
   "description": "CLI to generate a custom config for Prettier formatter",
-  "main": "prettier-rator.js",
+  "main": "cli.js",
   "bin": {
-    "prettier-rator": "./bin/prettier-rator"
+    "prettier-rator": "./bin/cli.js"
+  },
+  "engines": {
+    "node": ">= 6"
   },
   "author": "Leonardo Galante",
   "license": "MIT",
