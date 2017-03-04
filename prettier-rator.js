@@ -5,7 +5,7 @@ const PrettierRator = require('./src');
 
 program
   .version('0.0.1')
-  .option('-c, --create [editor]', 'Create configuration files for all editors or the one you want');
+  .option('-c, --create [editor]', 'Create configuration files for all editors or the ones you want');
 
 program.on('--help', function() {
   console.log('  [editor] parameters could be: \n');
