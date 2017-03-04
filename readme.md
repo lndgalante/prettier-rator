@@ -24,7 +24,7 @@ $ npm install --global prettier-rator
 Go to your project folder and run
 
 ```
-  $ prettier-rator
+  $ prettier-rator -c
 ```
 
 Your configuration files will be generated under the `configs` folder
