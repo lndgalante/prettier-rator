@@ -109,7 +109,7 @@ the last line instead of being alone on the next line.
   }
   askParser() {
     log(chalk.dim('Which parser to use.'));
-    const options = ['babylon', 'flow'];
+    const options = ['babylon (default)', 'flow'];
     const index = readlineSync.keyInSelect(options, `Which option you want? (default: ${this.config.parser})`, {
       cancel: false
     });
