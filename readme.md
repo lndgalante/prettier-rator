@@ -34,6 +34,7 @@ Your configuration files will be generated under the `configs` folder
 
 ## NPM Dependencies
 * readline-sync
+* commander
 * jsonfile
 * chalk
 
