@@ -165,6 +165,7 @@ the last line instead of being alone on the next line.
   createGeneralConfig() {
     this.createFolder()
     const generalConfig = {
+      useTabs: this.config.useTabs,
       printWidth: this.config.printWidth,
       tabWidth: this.config.tabWidth,
       singleQuote: this.config.singleQuote,
