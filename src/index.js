@@ -132,7 +132,7 @@ the last line instead of being alone on the next line.
 
   askSemi() {
     log(chalk.dim('Whether to add a semicolon at the end of every line. \n'))
-    this.config.semi = readlineSync.keyInYNStrict(`Want bracket spacing? (default: ${this.config.semi}): `)
+    this.config.semi = readlineSync.keyInYNStrict(`Want semicolons? (default: ${this.config.semi}): `)
   }
 
   askAll() {

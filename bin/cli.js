@@ -4,7 +4,7 @@ const program = require('commander')
 const PrettierRator = require('../src')
 
 program
-  .version('0.1.2')
+  .version('0.1.3')
   .option('-c, --create [editor]', 'Create configuration files for all editors or the ones you want')
 
 program.on('--help', function() {
