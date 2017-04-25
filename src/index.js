@@ -171,6 +171,7 @@ the last line instead of being alone on the next line.
       singleQuote: this.config.singleQuote,
       trailingComma: this.config.trailingComma,
       bracketSpacing: this.config.bracketSpacing,
+      jsxBracketSameLine: this.config.jsxBracketSameLine,
       parser: this.config.parser,
       semi: this.config.semi
     }
@@ -186,8 +187,10 @@ the last line instead of being alone on the next line.
   createSublimeTextConfig() {
     this.createFolder()
     const sublimeTextConfig = {
+      debug: false,
       prettier_cli_path: '',
-      auto_format_on_save: false,
+      node_path: '',
+      auto_format_on_save: true,
       allow_inline_formatting: false,
       prettier_options: this.config
     }
@@ -209,6 +212,7 @@ the last line instead of being alone on the next line.
       'prettier.singleQuote': this.config.singleQuote,
       'prettier.trailingComma': this.config.trailingComma,
       'prettier.bracketSpacing': this.config.bracketSpacing,
+      'prettier.jsxBracketSameLine': this.config.jsxBracketSameLine,
       'prettier.parser': this.config.parser,
       'prettier.semi': this.config.semi
     }
